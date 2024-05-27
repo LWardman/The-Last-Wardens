@@ -250,3 +250,4 @@ float AShooter::CalculateWeaponShotSpread()
 
 	return BaseShotSpread + MovementShotPenalty + AerialShotPenalty;
 }
+
