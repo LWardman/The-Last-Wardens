@@ -90,9 +90,7 @@ void AShooter::StopAiming(const FInputActionValue& Value)
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 
 	float CurrentArmLength = GetCameraBoom()->TargetArmLength;
-
 	float DecimalPercentageComplete = (CurrentArmLength - AimTargetArmLength) / (RestTargetArmLength - AimTargetArmLength);
-
 	float TimeToStartLerpAt = DecimalPercentageComplete * AimLerpDuration;
 
 	LerpCameraToRestingPosition(TimeToStartLerpAt, AimLerpDuration);
@@ -131,7 +129,10 @@ void AShooter::EquipWeapon(TSubclassOf<AWeapon> WeaponClass)
 {
 	if (!WeaponClass) return;
 
-	if (Weapon) UnequipWeapon();
+	if (HasWeaponEquipped()) 
+	{
+		UnequipWeapon();
+	}
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.TransformScaleMethod = ESpawnActorScaleMethod::MultiplyWithRoot;
@@ -164,7 +165,7 @@ void AShooter::UnequipWeapon()
 	TArray<AActor*> AttachedActors;
 	GetAttachedActors(AttachedActors);
 
-	for (AActor* Actor : AttachedActors)
+	for (AActor* Actor : AttachedActors)	// WARNING : WILL ONLY WORK WHILE WEAPONS ARE THE ONLY ATTACHED ACTORS
 	{
 		Actor->Destroy();
 	}
