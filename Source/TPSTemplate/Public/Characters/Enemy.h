@@ -8,6 +8,40 @@ class UBehaviorTree;
 class UHealthComponent;
 class UCriticalHitbox;
 
+USTRUCT(BlueprintType)
+struct FLootTable
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float AmmoChance = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float CommonDropChance = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float RareDropChance = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float LegendaryDropChance = 0.0f;
+
+	FLootTable()
+	{
+		AmmoChance = 0.6f;
+		CommonDropChance = 0.3f;
+		RareDropChance = 0.05f;
+		LegendaryDropChance = 0.005f;
+	}
+
+	FLootTable(float Ammo, float Common, float Rare, float Legendary)
+	{
+		AmmoChance = Ammo;
+		CommonDropChance = Common;
+		RareDropChance = Rare;
+		LegendaryDropChance = Legendary;
+	}
+};
+
 UCLASS()
 class TPSTEMPLATE_API AEnemy : public ACharacter
 {
@@ -34,6 +68,14 @@ public:
 
 	UPROPERTY(EditAnywhere, category = "Components")
 	UHealthComponent* Health;
+
+	UPROPERTY(EditAnywhere)
+	FLootTable LootTable = FLootTable();
+
+	void GenerateLoot();
+
+	//UPROPERTY(EditAnywhere)
+	//TArray<class ALoot*> Loot;
 
 	UFUNCTION()
 	void OnDeath();
