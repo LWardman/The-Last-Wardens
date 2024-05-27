@@ -7006,3 +7006,7 @@ Intermediate/ReimportCache/3688439234.bin
 Intermediate/ShaderAutogen/PCD3D_SM5/AutogenShaderHeaders.ush
 Intermediate/ShaderAutogen/PCD3D_SM6/AutogenShaderHeaders.ush
 .vs/TheLastWardens/v17/.suo
+.vsconfig
+TPSTemplate.code-workspace
+TheLastWardens.code-workspace
+TheLastWardens.sln
