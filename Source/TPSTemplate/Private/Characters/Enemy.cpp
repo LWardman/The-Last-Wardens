@@ -9,6 +9,7 @@
 #include "Components/CriticalHitbox.h"
 #include "Controllers/EnemyController.h"
 #include "GameModes/TPSTemplateGameMode.h"
+#include "Actors/LootDrops/Loot.h"
 
 AEnemy::AEnemy()
 {
@@ -25,6 +26,8 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GenerateLoot();
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -35,6 +38,28 @@ void AEnemy::Tick(float DeltaTime)
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void AEnemy::GenerateLoot()
+{
+	if (LootTable.SuccessfulThrow(LootTable.AmmoDropChance)) 		Loot.Add(AmmoDrop);
+	if (LootTable.SuccessfulThrow(LootTable.CommonDropChance)) 		Loot.Add(CommonDrop);
+	if (LootTable.SuccessfulThrow(LootTable.RareDropChance)) 		Loot.Add(RareDrop);
+	if (LootTable.SuccessfulThrow(LootTable.LegendaryDropChance)) 	Loot.Add(LegendaryDrop);
+}
+
+void AEnemy::DropLoot()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Dropping %i lootdrops"), Loot.Num());
+
+	for (TSubclassOf<ALoot> LootClass : Loot)
+	{
+		if (LootClass)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Spawning item of %s"), *LootClass->GetName());
+			GetWorld()->SpawnActor<ALoot>(LootClass, GetActorLocation(), GetActorRotation());
+		}
+	}
 }
 
 void AEnemy::OnDeath()
@@ -53,6 +78,8 @@ void AEnemy::OnDeath()
 		&AEnemy::CallDestroy,
 		10.f,
 		false);
+
+	DropLoot();
 }
 
 void AEnemy::CallDestroy()
