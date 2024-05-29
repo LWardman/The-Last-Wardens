@@ -38,6 +38,11 @@ public:
 
 	bool ReserveIsOutOfAmmo();
 
+	bool ReserveIsFull();
+
+
+	void AddAmmoToReserve(int32 AmmoAdded);
+
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Mesh;
