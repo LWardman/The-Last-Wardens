@@ -11,6 +11,8 @@ ALoot::ALoot()
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(FName("Box Collision"));
 	BoxCollision->SetupAttachment(Mesh);
+
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ALoot::OnOverlapBegin);
 }
 
 void ALoot::BeginPlay()
@@ -23,3 +25,9 @@ void ALoot::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void ALoot::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+                        class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                        const FHitResult& SweepResult)
+{
+	
+}
