@@ -43,10 +43,10 @@ protected:
 
 	void Reload(const FInputActionValue& Value);
 
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AWeapon* Weapon = nullptr;
 
-public:
 	void EquipWeapon(TSubclassOf<AWeapon> WeaponClass);
 
 	void UnequipWeapon();
