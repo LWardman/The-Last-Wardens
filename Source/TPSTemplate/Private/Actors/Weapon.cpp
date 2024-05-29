@@ -108,3 +108,13 @@ bool AWeapon::ReserveIsOutOfAmmo()
 {
 	return ReserveAmmo <= 0;
 }
+
+bool AWeapon::ReserveIsFull()
+{
+	return ReserveAmmo == MaxReserveAmmo;
+}
+
+void AWeapon::AddAmmoToReserve(int32 AmmoAdded)
+{
+	ReserveAmmo = FMath::Min(MaxReserveAmmo, ReserveAmmo + AmmoAdded);
+}
