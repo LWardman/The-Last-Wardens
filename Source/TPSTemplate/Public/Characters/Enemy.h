@@ -7,6 +7,7 @@
 class UBehaviorTree;
 class UHealthComponent;
 class UCriticalHitbox;
+class ALoot;
 
 USTRUCT(BlueprintType)
 struct FLootTable
@@ -14,7 +15,7 @@ struct FLootTable
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float AmmoChance = 0.0f;
+	float AmmoDropChance = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float CommonDropChance = 0.0f;
@@ -27,7 +28,7 @@ struct FLootTable
 
 	FLootTable()
 	{
-		AmmoChance = 0.6f;
+		AmmoDropChance = 0.6f;
 		CommonDropChance = 0.3f;
 		RareDropChance = 0.05f;
 		LegendaryDropChance = 0.005f;
@@ -35,10 +36,15 @@ struct FLootTable
 
 	FLootTable(float Ammo, float Common, float Rare, float Legendary)
 	{
-		AmmoChance = Ammo;
+		AmmoDropChance = Ammo;
 		CommonDropChance = Common;
 		RareDropChance = Rare;
 		LegendaryDropChance = Legendary;
+	}
+
+	bool SuccessfulThrow(float Probability)
+	{
+		return FMath::RandRange(0, 1) <= Probability;
 	}
 };
 
@@ -74,8 +80,21 @@ public:
 
 	void GenerateLoot();
 
-	//UPROPERTY(EditAnywhere)
-	//TArray<class ALoot*> Loot;
+	void DropLoot();
+
+	UPROPERTY(EditAnywhere, Category = "Loot")
+	TSubclassOf<ALoot> AmmoDrop;
+
+	UPROPERTY(EditAnywhere, Category = "Loot")
+	TSubclassOf<ALoot> CommonDrop;
+
+	UPROPERTY(EditAnywhere, Category = "Loot")
+	TSubclassOf<ALoot> RareDrop;
+
+	UPROPERTY(EditAnywhere, Category = "Loot")
+	TSubclassOf<ALoot> LegendaryDrop;
+
+	TArray<TSubclassOf<ALoot>> Loot;
 
 	UFUNCTION()
 	void OnDeath();
