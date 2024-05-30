@@ -32,6 +32,16 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Visual Effects")
 	UNiagaraSystem* LootMarker;
 
+	UPROPERTY(EditAnywhere, Meta = (MakeEditWidget = true))
+	FVector LootMarkerLocation;
+
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* BoxCollision;
+
+	UPROPERTY(EditAnywhere)
+	float InitialDropSpeed = 800.f;
+
+	void ApplyInitialImpulse(float ImpulseStrength);
+
+	void SpawnLootMarker();
 };
