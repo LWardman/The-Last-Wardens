@@ -22,22 +22,9 @@ void ALoot::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (GetWorld() && LootMarker && Mesh)
-	{
-		UNiagaraFunctionLibrary::SpawnSystemAttached
-			( 
-			LootMarker,
-			RootComponent,
-			FName("None"),
-			GetActorLocation(),
-			GetActorRotation(),
-			EAttachLocation::KeepWorldPosition,
-			true, //unsure
-			true, //unsure
-			ENCPoolMethod::None,
-			true //unsure
-			);
-	}
+	SpawnLootMarker();
+
+	ApplyInitialImpulse(InitialDropSpeed);
 }
 
 void ALoot::Tick(float DeltaTime)
@@ -50,4 +37,36 @@ void ALoot::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AAct
                         const FHitResult& SweepResult)
 {
 	
+}
+
+void ALoot::ApplyInitialImpulse(float ImpulseStrength)
+{
+	if (Mesh)
+	{
+		FVector RandVector = FMath::VRand();		// Random Unit Vector
+		RandVector.Z = FMath::Abs(RandVector.Z);	// Ensures the random vector pops upwards (northern hemisphere)
+		Mesh->AddImpulse(RandVector * ImpulseStrength);				// Adds random upwards vector as an impulse
+	}
+}
+
+void ALoot::SpawnLootMarker()
+{
+	if (GetWorld() && LootMarker && Mesh)
+	{
+		FVector SpawnLocation = GetActorTransform().TransformPosition(LootMarkerLocation);
+
+		UNiagaraFunctionLibrary::SpawnSystemAttached
+			( 
+			LootMarker,
+			RootComponent,
+			FName("None"),
+			SpawnLocation,
+			GetActorRotation(),
+			EAttachLocation::KeepWorldPosition,
+			true, //unsure
+			true, //unsure
+			ENCPoolMethod::None,
+			true //unsure
+			);
+	}
 }
