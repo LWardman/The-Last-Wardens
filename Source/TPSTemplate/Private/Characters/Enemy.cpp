@@ -99,7 +99,7 @@ void AEnemy::RemoveCollisionForGameplay()
 {
 	if (UCapsuleComponent* Collision = GetCapsuleComponent())
 	{
-		Collision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+		Collision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 		Collision->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block); // Stops enemies falling through the floor on death
 	}
 }
