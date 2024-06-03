@@ -43,9 +43,9 @@ void ALoot::ApplyInitialImpulse(float ImpulseStrength)
 {
 	if (Mesh)
 	{
-		FVector RandVector = FMath::VRand();		// Random Unit Vector
-		RandVector.Z = FMath::Abs(RandVector.Z);	// Ensures the random vector pops upwards (northern hemisphere)
-		Mesh->AddImpulse(RandVector * ImpulseStrength);				// Adds random upwards vector as an impulse
+		FVector RandVector = FMath::VRand();			// Random Unit Vector
+		RandVector.Z = FMath::Abs(RandVector.Z);		// Ensures the random vector pops upwards (northern hemisphere)
+		Mesh->AddImpulse(RandVector * ImpulseStrength);	// Adds random upwards vector as an impulse
 	}
 }
 
