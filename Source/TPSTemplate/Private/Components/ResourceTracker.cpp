@@ -2,23 +2,15 @@
 
 UResourceTracker::UResourceTracker()
 {
-	PrimaryComponentTick.bCanEverTick = true;
-
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
-
-// Called when the game starts
-void UResourceTracker::BeginPlay()
+void UResourceTracker::IncreaseResourceCounter(int32 &Tracker, int32 NewResourceCount)
 {
-	Super::BeginPlay();
-
+	Tracker += NewResourceCount;
 }
 
-
-// Called every frame
-void UResourceTracker::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UResourceTracker::DecreaseResourceCounter(int32 &Tracker, int32 ResourceReduction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	Tracker -= ResourceReduction;
 }
-
