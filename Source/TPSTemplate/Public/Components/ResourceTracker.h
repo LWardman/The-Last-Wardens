@@ -13,11 +13,15 @@ class TPSTEMPLATE_API UResourceTracker : public UActorComponent
 public:	
 	UResourceTracker();
 
-protected:
-	virtual void BeginPlay() override;
-
 public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	int32 CommonResourceCounter = 0;
+
+	int32 RareResourceCounter = 0;
+
+	int32 LegendaryResourceCounter = 0;
+
+	void IncreaseResourceCounter(int32 &Tracker, int32 NewResourceCount);
+
+	void DecreaseResourceCounter(int32 &Tracker, int32 ResourceReduction);
 };
