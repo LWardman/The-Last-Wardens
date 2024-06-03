@@ -11,6 +11,7 @@
 #include "InputActionValue.h"
 
 #include "Components/HealthComponent.h"
+#include "Components/ResourceTracker.h"
 
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -46,6 +47,8 @@ ATPSTemplateCharacter::ATPSTemplateCharacter()
 
 	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 	Health->Death.AddDynamic(this, &ATPSTemplateCharacter::OnDeath);
+
+	ResourceTracker = CreateDefaultSubobject<UResourceTracker>(TEXT("Resource Tracker"));
 }
 
 void ATPSTemplateCharacter::BeginPlay()
