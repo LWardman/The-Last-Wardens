@@ -13,6 +13,7 @@ struct FInputActionValue;
 
 class UPlayerHUD;
 class UHealthComponent;
+class UResourceTracker;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -78,5 +79,7 @@ public:
 
 	UFUNCTION()
 	void OnDeath();
-};
 
+public:
+	UResourceTracker* ResourceTracker;
+};
