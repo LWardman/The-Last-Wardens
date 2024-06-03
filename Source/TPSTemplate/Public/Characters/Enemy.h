@@ -44,7 +44,7 @@ struct FLootTable
 
 	bool SuccessfulThrow(float Probability)
 	{
-		return FMath::RandRange(0, 1) <= Probability;
+		return FMath::RandRange(0.0f, 1.0f) <= Probability;
 	}
 };
 
