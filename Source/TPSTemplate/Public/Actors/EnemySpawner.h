@@ -30,7 +30,9 @@ public:
 
 	FTimerHandle SpawnHandle;
 
+	UPROPERTY(EditAnywhere, Category = "Gameplay Stats")
 	float SpawnDelayMin = 2.0f;
 
+	UPROPERTY(EditAnywhere, Category = "Gameplay Stats")
 	float SpawnDelayMax = 4.0f;
 };
