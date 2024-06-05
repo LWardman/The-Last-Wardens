@@ -75,7 +75,7 @@ public:
 	UPROPERTY(EditAnywhere, category = "Components")
 	UHealthComponent* Health;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Loot")
 	FLootTable LootTable = FLootTable();
 
 	void GenerateLoot();
@@ -108,7 +108,7 @@ public:
 
 	void StatTrackEnemyDeath();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly)
 	bool bIsDead = false;
 
 	FTimerHandle DestructionHandle;
