@@ -16,14 +16,17 @@ void AResourceDrop::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, cl
             if (bIsCommonResource)
             {
                 Tracker->IncreaseResourceCounter(Tracker->CommonResourceCounter, ResourceCount);
+                Destroy();
             }
             else if (bIsRareResource)
             {
                 Tracker->IncreaseResourceCounter(Tracker->RareResourceCounter, ResourceCount);
+                Destroy();
             }
             if (bIsLegendaryResource)
             {
                 Tracker->IncreaseResourceCounter(Tracker->LegendaryResourceCounter, ResourceCount);
+                Destroy();
             }
         }
     }
