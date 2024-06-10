@@ -14,6 +14,7 @@ struct FInputActionValue;
 class UPlayerHUD;
 class UHealthComponent;
 class UResourceTracker;
+class UModifierComponent;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -82,4 +83,10 @@ public:
 
 public:
 	UResourceTracker* ResourceTracker;
+
+	UModifierComponent* SpeedModifierComponent;
+
+	float GetSpeedModifier();
+
+	float BaseMovementSpeed = 500.f;
 };
