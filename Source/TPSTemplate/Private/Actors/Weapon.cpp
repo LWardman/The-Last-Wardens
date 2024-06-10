@@ -5,12 +5,16 @@
 #include "Kismet/GameplayStatics.h"
 #include "Components/AudioComponent.h"
 
+#include "Components/ModifierComponent.h"
+
 AWeapon::AWeapon()
 {
  	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	RootComponent = Mesh;
+
+	DamageModifierComponent = CreateDefaultSubobject<UModifierComponent>(TEXT("Damage Modifier"));
 }
 
 void AWeapon::BeginPlay()
@@ -117,4 +121,16 @@ bool AWeapon::ReserveIsFull()
 void AWeapon::AddAmmoToReserve(int32 AmmoAdded)
 {
 	ReserveAmmo = FMath::Min(MaxReserveAmmo, ReserveAmmo + AmmoAdded);
+}
+
+float AWeapon::CalculateDamageOutput(bool bCriticalHit)
+{
+	return ((1.0f + bCriticalHit * CriticalModifier) * (Damage * GetDamageModifier()));
+}
+
+float AWeapon::GetDamageModifier()
+{
+	if (!DamageModifierComponent) return 1.0f;
+
+	return DamageModifierComponent->Modifier;
 }
