@@ -1,24 +1,33 @@
 #include "Components/ModifierComponent.h"
 
-// Sets default values for this component's properties
+
 UModifierComponent::UModifierComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
+	Parent = GetOwner();
 }
 
-
-// Called when the game starts
-void UModifierComponent::BeginPlay()
+void UModifierComponent::ApplyBuff(float Multiplier, float ModifierDuration)
 {
-	Super::BeginPlay();
-	
+	if (!Parent || Multiplier == 0) return; 	// Ensures Speed can get back to its previous value OnBuffEnd
+
+	if (UWorld* World = Parent->GetWorld())
+	{
+		Modifier *= Multiplier;			// Has no dependence on World being valid, but is here to ensure the timer can be set
+
+		FTimerDelegate Delegate;
+		Delegate.BindUFunction(this, "OnBuffEnd", Multiplier);
+
+		World->GetTimerManager().SetTimer(
+			ModifierHandle,
+			Delegate,
+			ModifierDuration,
+			false);
+	}
 }
 
-
-void UModifierComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UModifierComponent::OnBuffEnd(float OriginalModifier)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	Modifier /= OriginalModifier;
 }
-
