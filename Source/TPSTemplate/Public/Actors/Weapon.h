@@ -63,6 +63,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Weapon Stats")
 	int32 ReserveAmmo = MaxReserveAmmo;
 
+
 	UModifierComponent* DamageModifierComponent;
 
 	float GetDamageModifier();
