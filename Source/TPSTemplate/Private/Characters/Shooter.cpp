@@ -235,7 +235,7 @@ void AShooter::OnWeaponFired()
 
 	if (UHealthComponent* HealthComp = Cast<UHealthComponent>(Hit.GetActor()->FindComponentByClass(UHealthComponent::StaticClass())))
 	{
-		HealthComp->TakeDamage( (1.0f + bCriticalHit * Weapon->CriticalModifier) * Weapon->Damage );
+		HealthComp->TakeDamage(Weapon->CalculateDamageOutput(bCriticalHit));
 	}
 }
 
