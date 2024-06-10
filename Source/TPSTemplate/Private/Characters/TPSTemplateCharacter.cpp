@@ -12,6 +12,7 @@
 
 #include "Components/HealthComponent.h"
 #include "Components/ResourceTracker.h"
+#include "Components/ModifierComponent.h"
 
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -29,7 +30,7 @@ ATPSTemplateCharacter::ATPSTemplateCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); 
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MaxWalkSpeed = BaseMovementSpeed;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
@@ -49,6 +50,8 @@ ATPSTemplateCharacter::ATPSTemplateCharacter()
 	Health->Death.AddDynamic(this, &ATPSTemplateCharacter::OnDeath);
 
 	ResourceTracker = CreateDefaultSubobject<UResourceTracker>(TEXT("Resource Tracker"));
+
+	SpeedModifierComponent = CreateDefaultSubobject<UModifierComponent>(TEXT("Speed Modifier Component"));
 }
 
 void ATPSTemplateCharacter::BeginPlay()
@@ -87,6 +90,11 @@ void ATPSTemplateCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 void ATPSTemplateCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+	{
+		MoveComp->MaxWalkSpeed = BaseMovementSpeed * GetSpeedModifier();
+	}
 }
 
 void ATPSTemplateCharacter::Move(const FInputActionValue& Value)
@@ -163,4 +171,11 @@ FHitResult ATPSTemplateCharacter::LineTraceFromCamera(float TraceLength, float T
 void ATPSTemplateCharacter::OnDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s has died"), *GetActorNameOrLabel());
+}
+
+float ATPSTemplateCharacter::GetSpeedModifier()
+{
+	if (!SpeedModifierComponent) return 1.0f;
+
+	return SpeedModifierComponent->Modifier;
 }
