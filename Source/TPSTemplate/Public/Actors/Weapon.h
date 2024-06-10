@@ -6,6 +6,7 @@
 
 class UNiagaraSystem;
 class UAudioComponent;
+class UModifierComponent;
 
 UCLASS()
 class TPSTEMPLATE_API AWeapon : public AActor
@@ -43,6 +44,8 @@ public:
 
 	void AddAmmoToReserve(int32 AmmoAdded);
 
+	float CalculateDamageOutput(bool bCriticalHit);
+
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Mesh;
@@ -59,6 +62,10 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Stats")
 	int32 ReserveAmmo = MaxReserveAmmo;
+
+	UModifierComponent* DamageModifierComponent;
+
+	float GetDamageModifier();
 
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Stats")
