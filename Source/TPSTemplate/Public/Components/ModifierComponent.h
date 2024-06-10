@@ -13,11 +13,18 @@ class TPSTEMPLATE_API UModifierComponent : public UActorComponent
 public:	
 	UModifierComponent();
 
-protected:
-	virtual void BeginPlay() override;
-
 public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	AActor* Parent = nullptr;
+
+	UPROPERTY()
+	float Modifier = 1.0f;
+
+	FTimerHandle ModifierHandle;
+
+	UFUNCTION()
+	void ApplyBuff(float Multiplier, float ModifierDuration);
+
+	UFUNCTION()
+	void OnBuffEnd(float OriginalModifier);
 };
