@@ -1,6 +1,17 @@
 #include "Actors/LootDrops/ModifierDrop.h"
 
 
+AModifierDrop::AModifierDrop()
+{
+	bHasLifespan = true;
+	Lifespan = 20.f;
+}
+
+void AModifierDrop::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void AModifierDrop::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -13,7 +24,6 @@ void AModifierDrop::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, cl
                         const FHitResult& SweepResult)
 {
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-
 }
 
 void AModifierDrop::RotateModifierDrop(float DeltaTime)

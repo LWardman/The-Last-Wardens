@@ -10,8 +10,14 @@ class TPSTEMPLATE_API AModifierDrop : public ALoot
 {
 	GENERATED_BODY()
 
+public:
+	AModifierDrop();
 
-public:	
+protected:	
+
+	virtual void BeginPlay() override;
+
+public:
 
 	virtual void Tick(float DeltaTime) override;
 
