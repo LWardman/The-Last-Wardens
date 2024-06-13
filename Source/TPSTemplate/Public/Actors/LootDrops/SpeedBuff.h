@@ -9,6 +9,10 @@ class TPSTEMPLATE_API ASpeedBuff : public AModifierDrop
 {
 	GENERATED_BODY()
 	
+protected:
+
+    virtual void BeginPlay() override;
+
 public:
 
 	virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,

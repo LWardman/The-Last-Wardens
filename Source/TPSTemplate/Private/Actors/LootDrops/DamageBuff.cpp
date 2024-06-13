@@ -4,6 +4,11 @@
 #include "Actors/Weapon.h"
 #include "Components/ModifierComponent.h"
 
+void ADamageBuff::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void ADamageBuff::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
                         class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                         const FHitResult& SweepResult)

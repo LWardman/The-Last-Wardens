@@ -10,6 +10,12 @@ class TPSTEMPLATE_API AAmmoDrop : public ALoot
 {
 	GENERATED_BODY()
 
+protected:
+
+    virtual void BeginPlay() override;
+
+public:
+
 	virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
                         class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                         const FHitResult& SweepResult) override;

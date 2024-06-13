@@ -10,6 +10,10 @@ class TPSTEMPLATE_API ADamageBuff : public AModifierDrop
 {
 	GENERATED_BODY()
 	
+protected:
+
+    virtual void BeginPlay() override;
+
 public:
 
 	virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,

@@ -3,6 +3,12 @@
 #include "Characters/TPSTemplateCharacter.h"
 #include "Components/ResourceTracker.h"
 
+
+void AResourceDrop::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void AResourceDrop::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
                         class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                         const FHitResult& SweepResult)
