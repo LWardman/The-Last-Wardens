@@ -8,6 +8,7 @@ class UBehaviorTree;
 class UHealthComponent;
 class UCriticalHitbox;
 class ALoot;
+class AModifierDrop;
 
 USTRUCT(BlueprintType)
 struct FLootTable
@@ -26,20 +27,25 @@ struct FLootTable
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float LegendaryDropChance = 0.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ModifierDropChance = 0.0f;
+
 	FLootTable()
 	{
 		AmmoDropChance = 0.6f;
 		CommonDropChance = 0.3f;
-		RareDropChance = 0.05f;
-		LegendaryDropChance = 0.005f;
+		RareDropChance = 0.1f;
+		ModifierDropChance = 0.05f;
+		LegendaryDropChance = 0.01f;
 	}
 
-	FLootTable(float Ammo, float Common, float Rare, float Legendary)
+	FLootTable(float Ammo, float Common, float Rare, float Legendary, float Modifier)
 	{
 		AmmoDropChance = Ammo;
 		CommonDropChance = Common;
 		RareDropChance = Rare;
 		LegendaryDropChance = Legendary;
+		ModifierDropChance = Modifier;
 	}
 
 	bool SuccessfulThrow(float Probability)
@@ -75,6 +81,8 @@ public:
 	UPROPERTY(EditAnywhere, category = "Components")
 	UHealthComponent* Health;
 
+public:
+
 	UPROPERTY(EditAnywhere, Category = "Loot")
 	FLootTable LootTable = FLootTable();
 
@@ -94,7 +102,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Loot")
 	TSubclassOf<ALoot> LegendaryDrop;
 
+	UPROPERTY(EditAnywhere, Category = "Loot")
+	TArray<TSubclassOf<AModifierDrop>> AllModifiers;
+
 	TArray<TSubclassOf<ALoot>> Loot;
+
+public:
 
 	UFUNCTION()
 	void OnDeath();

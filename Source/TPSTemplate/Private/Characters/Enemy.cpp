@@ -10,6 +10,7 @@
 #include "Controllers/EnemyController.h"
 #include "GameModes/TPSTemplateGameMode.h"
 #include "Actors/LootDrops/Loot.h"
+#include "Actors/LootDrops/ModifierDrop.h"
 
 AEnemy::AEnemy()
 {
@@ -46,17 +47,28 @@ void AEnemy::GenerateLoot()
 	if (LootTable.SuccessfulThrow(LootTable.CommonDropChance)) 		Loot.Add(CommonDrop);
 	if (LootTable.SuccessfulThrow(LootTable.RareDropChance)) 		Loot.Add(RareDrop);
 	if (LootTable.SuccessfulThrow(LootTable.LegendaryDropChance)) 	Loot.Add(LegendaryDrop);
+
+	if (LootTable.SuccessfulThrow(LootTable.ModifierDropChance))
+	{
+		if (AllModifiers.IsEmpty()) return;
+
+		int32 MaxRandRange = AllModifiers.Num() - 1;				// -1 adjusts for index starting at 0
+
+		int32 ModifierIndex = FMath::RandRange(0, MaxRandRange);	// Used to select random entry in TArray
+
+		if (AllModifiers.IsValidIndex(ModifierIndex))
+		{
+			Loot.Add(AllModifiers[ModifierIndex]);
+		}
+	}
 }
 
 void AEnemy::DropLoot()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Dropping %i lootdrops"), Loot.Num());
-
 	for (TSubclassOf<ALoot> LootClass : Loot)
 	{
 		if (LootClass)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Spawning item of %s"), *LootClass->GetName());
 			GetWorld()->SpawnActor<ALoot>(LootClass, GetActorLocation(), GetActorRotation());
 		}
 	}
