@@ -15,6 +15,8 @@ AWeapon::AWeapon()
 	RootComponent = Mesh;
 
 	DamageModifierComponent = CreateDefaultSubobject<UModifierComponent>(TEXT("Damage Modifier"));
+
+	FireRateModifierComponent = CreateDefaultSubobject<UModifierComponent>(TEXT("Fire Rate Modifier"));
 }
 
 void AWeapon::BeginPlay()
@@ -81,7 +83,7 @@ void AWeapon::TryFire()
 
 void AWeapon::Fire()
 {
-	GetWorld()->GetTimerManager().SetTimer(ShotTimerHandle, RateOfFire, false);
+	GetWorld()->GetTimerManager().SetTimer(ShotTimerHandle, CalculateTimeUntilNextShot(), false);
 
 	AmmoCount--;
 
@@ -133,4 +135,20 @@ float AWeapon::GetDamageModifier()
 	if (!DamageModifierComponent) return 1.0f;
 
 	return DamageModifierComponent->Modifier;
+}
+
+float AWeapon::GetFireRateModifier()
+{
+	if (!FireRateModifierComponent) return 1.0f;
+
+	return FireRateModifierComponent->Modifier;
+}
+
+float AWeapon::CalculateTimeUntilNextShot()
+{
+	float Modifier = GetFireRateModifier();
+
+	if (Modifier == 0) return RateOfFire;
+
+	return RateOfFire / Modifier;
 }

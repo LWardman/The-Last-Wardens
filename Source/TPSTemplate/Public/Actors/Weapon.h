@@ -68,6 +68,12 @@ public:
 
 	float GetDamageModifier();
 
+	UModifierComponent* FireRateModifierComponent;
+
+	float GetFireRateModifier();
+
+	float CalculateTimeUntilNextShot();
+
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Stats")
 	float Damage = 20.0f;
