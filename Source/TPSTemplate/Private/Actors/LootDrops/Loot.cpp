@@ -12,6 +12,8 @@ ALoot::ALoot()
 	Mesh->SetSimulatePhysics(true);
 	Mesh->BodyInstance.bLockXRotation = true;
 	Mesh->BodyInstance.bLockYRotation = true;
+	
+	RootComponent = Mesh;
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collision"));
 	BoxCollision->SetupAttachment(Mesh);
@@ -25,6 +27,16 @@ void ALoot::BeginPlay()
 	SpawnLootMarker();
 
 	ApplyInitialImpulse(InitialDropSpeed);
+
+	if (bHasLifespan)
+	{
+		GetWorld()->GetTimerManager().SetTimer(
+			LifetimeHandle, 
+			this, 
+			&ALoot::CallDestroy, 
+			Lifespan, 
+			false);
+	}
 }
 
 void ALoot::Tick(float DeltaTime)
@@ -69,4 +81,9 @@ void ALoot::SpawnLootMarker()
 			true //unsure
 			);
 	}
+}
+
+void ALoot::CallDestroy()
+{
+	Destroy();
 }

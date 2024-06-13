@@ -44,4 +44,14 @@ public:
 	void ApplyInitialImpulse(float ImpulseStrength);
 
 	void SpawnLootMarker();
+
+	UFUNCTION()
+	void CallDestroy();		// Only used since Destroy cannot be bound to a timer, as it isnt a ufunction.
+
+
+	bool bHasLifespan = false;
+
+	float Lifespan = 30.f;
+
+	FTimerHandle LifetimeHandle;
 };
