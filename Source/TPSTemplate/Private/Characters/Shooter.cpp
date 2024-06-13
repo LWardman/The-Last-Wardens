@@ -74,7 +74,7 @@ void AShooter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AShooter::Aim(const FInputActionValue& Value)
 {
 	bAimingIn = true;
-	GetCharacterMovement()->MaxWalkSpeed = 250.f;
+	BaseMovementSpeed = 250.f;
 
 	float CurrentArmLength = GetCameraBoom()->TargetArmLength;
 	float DecimalPercentageComplete = (RestTargetArmLength - CurrentArmLength) / (RestTargetArmLength - AimTargetArmLength);
@@ -87,7 +87,7 @@ void AShooter::Aim(const FInputActionValue& Value)
 void AShooter::StopAiming(const FInputActionValue& Value)
 {
 	bAimingIn = false;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	BaseMovementSpeed = 500.f;
 
 	float CurrentArmLength = GetCameraBoom()->TargetArmLength;
 	float DecimalPercentageComplete = (CurrentArmLength - AimTargetArmLength) / (RestTargetArmLength - AimTargetArmLength);
